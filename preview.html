@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Đề Thi Trắc Nghiệm - Đạo Hàm Riêng và Gradient</title>
+
+<!-- MathJax -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        background:#f4f7fb;
+        margin:0;
+        padding:0;
+        line-height:1.6;
+    }
+
+    header{
+        background:#005a9c;
+        color:white;
+        padding:25px;
+        text-align:center;
+    }
+
+    .container{
+        width:90%;
+        max-width:1100px;
+        margin:auto;
+        padding:20px;
+    }
+
+    .section-title{
+        background:#003f6d;
+        color:white;
+        padding:10px;
+        border-radius:8px;
+        margin-top:30px;
+    }
+
+    .question{
+        background:white;
+        padding:20px;
+        border-radius:12px;
+        margin:20px 0;
+        box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .question h3{
+        margin-top:0;
+        color:#003f6d;
+    }
+
+    .option{
+        display:block;
+        margin:10px 0;
+        padding:12px;
+        border:2px solid #ccc;
+        border-radius:8px;
+        cursor:pointer;
+        transition:0.3s;
+    }
+
+    .option:hover{
+        background:#eef5ff;
+    }
+
+    .correct{
+        background:#c8f7c5 !important;
+        border-color:green !important;
+        color:#065f0a;
+        font-weight:bold;
+    }
+
+    .wrong{
+        background:#ffd4d4 !important;
+        border-color:red !important;
+        color:#8b0000;
+        font-weight:bold;
+    }
+
+    .disabled{
+        pointer-events:none;
+    }
+
+    .answer-box{
+        margin-top:15px;
+        padding:15px;
+        background:#f9f9f9;
+        border-left:5px solid #005a9c;
+        border-radius:8px;
+        display:none;
+    }
+
+    .tip{
+        background:#fff8d6;
+        padding:10px;
+        border-left:4px solid orange;
+        margin-top:10px;
+        border-radius:6px;
+    }
+
+    .download-btn{
+        display:inline-block;
+        margin-top:20px;
+        background:#007bff;
+        color:white;
+        padding:12px 20px;
+        border-radius:10px;
+        text-decoration:none;
+        font-weight:bold;
+    }
+
+    footer{
+        text-align:center;
+        padding:30px;
+        color:#555;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>ĐỀ THI TƯƠNG TÁC</h1>
+    <h2>Đạo Hàm Riêng và Gradient</h2>
+    <p>20 câu trắc nghiệm có giải thích và mẹo làm nhanh</p>
+</header>
+
+<div class="container">
+
+<!-- ====================== -->
+<!-- LÝ THUYẾT -->
+<!-- ====================== -->
+
+<div class="section-title">
+    <h2>PHẦN I - LÝ THUYẾT (5 câu)</h2>
+</div>
+
+<div id="quiz-container"></div>
+
+<!-- DOWNLOAD -->
+<a class="download-btn" href="#" download="de-thi-gradient.html">
+    ⬇ Tải file HTML
+</a>
+
+</div>
+
+<footer>
+    <p><b>Gradient không chỉ là công thức — mà là hướng đi mạnh nhất.</b></p>
+</footer>
+
+<script>
+
+const questions = [
+
+/* ================================================= */
+/* LÝ THUYẾT */
+/* ================================================= */
+
+{
+type:"Lý thuyết",
+question:"Đạo hàm riêng theo $x$ biểu diễn điều gì?",
+options:[
+"Độ dốc lớn nhất của hàm",
+"Tốc độ thay đổi của hàm khi chỉ $x$ thay đổi",
+"Giá trị cực đại của hàm",
+"Tốc độ thay đổi của mọi biến"
+],
+answer:1,
+explanation:"Đạo hàm riêng theo x giữ các biến khác cố định và chỉ xét sự thay đổi của x.",
+tip:"Thấy chữ 'riêng' ⇒ chỉ thay đổi một biến."
+},
+
+{
+type:"Lý thuyết",
+question:"Gradient của hàm số là gì?",
+options:[
+"Một số thực",
+"Một ma trận",
+"Một vector gồm các đạo hàm riêng",
+"Một tích phân"
+],
+answer:2,
+explanation:"Gradient là vector chứa tất cả đạo hàm riêng của hàm.",
+tip:"Gradient luôn là vector hướng."
+},
+
+{
+type:"Lý thuyết",
+question:"Gradient chỉ hướng nào?",
+options:[
+"Hướng giảm nhanh nhất",
+"Hướng tăng nhanh nhất",
+"Hướng không đổi",
+"Hướng ngẫu nhiên"
+],
+answer:1,
+explanation:"Gradient luôn chỉ hướng tăng nhanh nhất của hàm số.",
+tip:"Gradient giống chiếc la bàn leo núi."
+},
+
+{
+type:"Lý thuyết",
+question:"Độ dài của gradient biểu diễn điều gì?",
+options:[
+"Tốc độ tăng của hàm",
+"Số chiều của hàm",
+"Diện tích đồ thị",
+"Độ cong"
+],
+answer:0,
+explanation:"Độ lớn gradient cho biết tốc độ tăng nhanh đến mức nào.",
+tip:"Vector càng dài ⇒ độ dốc càng lớn."
+},
+
+{
+type:"Lý thuyết",
+question:"Ứng dụng nổi tiếng của gradient trong AI là gì?",
+options:[
+"Gradient Descent",
+"Tích phân từng phần",
+"Biến đổi Fourier",
+"Ma trận nghịch đảo"
+],
+answer:0,
+explanation:"Gradient Descent dùng gradient để tối ưu hàm mất mát trong AI.",
+tip:"AI học bằng cách 'đi xuống dốc'."
+},
+
+/* ================================================= */
+/* DỄ */
+/* ================================================= */
+
+{
+type:"Dễ",
+question:"Cho $f(x,y)=x^2+y^2$. Tính $\\frac{\\partial f}{\\partial x}$",
+options:[
+"$2x$",
+"$2y$",
+"$x+y$",
+"$x^2$"
+],
+answer:0,
+explanation:"Lấy đạo hàm theo x nên xem y là hằng số.",
+tip:"Đạo hàm $x^2$ ⇒ $2x$."
+},
+
+{
+type:"Dễ",
+question:"Cho $f(x,y)=x^2+y^2$. Gradient là:",
+options:[
+"$(x,y)$",
+"$(2x,2y)$",
+"$(2,2)$",
+"$(x^2,y^2)$"
+],
+answer:1,
+explanation:"Gradient gồm các đạo hàm riêng: $(2x,2y)$.",
+tip:"Gradient = ghép các đạo hàm riêng."
+},
+
+{
+type:"Dễ",
+question:"Gradient của $f(x,y)=x^2+y^2$ tại $(1,1)$ là:",
+options:[
+"$(1,1)$",
+"$(2,2)$",
+"$(0,0)$",
+"$(1,2)$"
+],
+answer:1,
+explanation:"Thay x=1,y=1 vào gradient $(2x,2y)$.",
+tip:"Thay trực tiếp tọa độ vào gradient."
+},
+
+{
+type:"Dễ",
+question:"Cho $f(x,y)=3x+y$. Tính $\\frac{\\partial f}{\\partial y}$",
+options:[
+"$3$",
+"$y$",
+"$1$",
+"$0$"
+],
+answer:2,
+explanation:"Đạo hàm của y theo y là 1.",
+tip:"Biến không chứa y ⇒ đạo hàm bằng 0."
+},
+
+{
+type:"Dễ",
+question:"Cho $f(x,y)=xy$. Tính $\\frac{\\partial f}{\\partial x}$",
+options:[
+"$y$",
+"$x$",
+"$xy$",
+"$1$"
+],
+answer:0,
+explanation:"Giữ y cố định nên y là hằng số.",
+tip:"$xy$ theo x giống $y·x$."
+},
+
+/* ================================================= */
+/* TRUNG BÌNH */
+/* ================================================= */
+
+{
+type:"Trung bình",
+question:"Cho $f(x,y)=x^2+3y^2$. Gradient là:",
+options:[
+"$(2x,6y)$",
+"$(x,3y)$",
+"$(2,6)$",
+"$(2x,3y)$"
+],
+answer:0,
+explanation:"Đạo hàm riêng theo x là 2x, theo y là 6y.",
+tip:"Đừng quên đạo hàm của $3y^2$ là $6y$."
+},
+
+{
+type:"Trung bình",
+question:"Cho $f(x,y)=x^3+y^3$. Tính gradient tại $(1,2)$",
+options:[
+"$(3,12)$",
+"$(1,8)$",
+"$(3,3)$",
+"$(2,4)$"
+],
+answer:0,
+explanation:"Gradient là $(3x^2,3y^2)$ ⇒ tại (1,2) là $(3,12)$.",
+tip:"Đạo hàm $x^3$ ⇒ $3x^2$."
+},
+
+{
+type:"Trung bình",
+question:"Cho $f(x,y)=x^2y$. Tính $\\frac{\\partial f}{\\partial y}$",
+options:[
+"$2xy$",
+"$x^2$",
+"$y^2$",
+"$xy$"
+],
+answer:1,
+explanation:"Theo y thì $x^2$ là hằng số.",
+tip:"Đạo hàm của y là 1."
+},
+
+{
+type:"Trung bình",
+question:"Gradient của hàm hằng số luôn bằng:",
+options:[
+"1",
+"0",
+"∞",
+"Không xác định"
+],
+answer:1,
+explanation:"Hàm hằng không thay đổi nên mọi đạo hàm riêng bằng 0.",
+tip:"Không đổi ⇒ độ dốc bằng 0."
+},
+
+{
+type:"Trung bình",
+question:"Cho $f(x,y)=e^x+y^2$. Gradient là:",
+options:[
+"$(e^x,2y)$",
+"$(x e^x,2y)$",
+"$(e^x,y)$",
+"$(2e^x,2y)$"
+],
+answer:0,
+explanation:"Đạo hàm riêng theo x của $e^x$ là $e^x$.",
+tip:"Nhớ đạo hàm đặc biệt của $e^x$."
+},
+
+/* ================================================= */
+/* KHÓ */
+/* ================================================= */
+
+{
+type:"Khó",
+question:"Cho $f(x,y)=x^2y+y^3$. Gradient tại $(1,1)$ là:",
+options:[
+"$(2,4)$",
+"$(1,3)$",
+"$(2,2)$",
+"$(3,4)$"
+],
+answer:0,
+explanation:"$\\nabla f=(2xy,x^2+3y^2)$. Thay (1,1) được $(2,4)$.",
+tip:"Tách từng đạo hàm riêng trước rồi mới thay số."
+},
+
+{
+type:"Khó",
+question:"Cho $f(x,y)=\\ln(x^2+y^2)$. Tính $\\frac{\\partial f}{\\partial x}$",
+options:[
+"$\\frac{2x}{x^2+y^2}$",
+"$\\frac{x}{x^2+y^2}$",
+"$2x$",
+"$\\ln x$"
+],
+answer:0,
+explanation:"Dùng đạo hàm hàm hợp: $(\\ln u)'=u'/u$.",
+tip:"Logarit ⇒ nghĩ ngay tới công thức $u'/u$."
+},
+
+{
+type:"Khó",
+question:"Cho $f(x,y)=x^2+xy+y^2$. Gradient tại $(1,2)$ là:",
+options:[
+"$(4,5)$",
+"$(2,3)$",
+"$(5,4)$",
+"$(3,6)$"
+],
+answer:0,
+explanation:"Gradient: $(2x+y,x+2y)$. Thay (1,2): $(4,5)$.",
+tip:"Đạo hàm của xy theo x là y."
+},
+
+{
+type:"Khó",
+question:"Gradient của $f(x,y,z)=x^2+y^2+z^2$ là:",
+options:[
+"$(2x,2y,2z)$",
+"$(x,y,z)$",
+"$(2,2,2)$",
+"$x+y+z$"
+],
+answer:0,
+explanation:"Gradient 3 chiều gồm ba đạo hàm riêng.",
+tip:"Mỗi biến tạo một thành phần vector."
+},
+
+{
+type:"Khó",
+question:"Cho $f(x,y)=x^2-y^2$. Hướng gradient tại $(1,1)$ là:",
+options:[
+"$(2,-2)$",
+"$(2,2)$",
+"$(-2,2)$",
+"$(1,-1)$"
+],
+answer:0,
+explanation:"Gradient là $(2x,-2y)$ ⇒ tại (1,1) là $(2,-2)$.",
+tip:"Cẩn thận dấu âm ở $-y^2$."
+}
+
+];
+
+const container = document.getElementById("quiz-container");
+
+questions.forEach((q,index)=>{
+
+    const div = document.createElement("div");
+    div.className = "question";
+
+    div.innerHTML = `
+        <h3>Câu ${index+1} (${q.type})</h3>
+        <p>${q.question}</p>
+    `;
+
+    q.options.forEach((opt,optIndex)=>{
+
+        const btn = document.createElement("div");
+        btn.className = "option";
+        btn.innerHTML = opt;
+
+        btn.onclick = ()=>{
+
+            const allOptions = div.querySelectorAll(".option");
+
+            allOptions.forEach(o=>o.classList.add("disabled"));
+
+            if(optIndex === q.answer){
+                btn.classList.add("correct");
+            }else{
+                btn.classList.add("wrong");
+                allOptions[q.answer].classList.add("correct");
+            }
+
+            answerBox.style.display = "block";
+
+            MathJax.typeset();
+        };
+
+        div.appendChild(btn);
+    });
+
+    const answerBox = document.createElement("div");
+    answerBox.className = "answer-box";
+
+    answerBox.innerHTML = `
+        <b>Đáp án đúng:</b> ${String.fromCharCode(65+q.answer)}<br><br>
+        <b>Giải thích:</b> ${q.explanation}
+        <div class="tip">
+            <b>Mẹo làm nhanh:</b> ${q.tip}
+        </div>
+    `;
+
+    div.appendChild(answerBox);
+
+    container.appendChild(div);
+});
+
+MathJax.typeset();
+
+</script>
+
+</body>
+</html>
